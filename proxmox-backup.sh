@@ -165,7 +165,7 @@ run_backups() {
 # Sync to NAS
 sync_to_nas() {
     log "Starting NAS sync..."
-    if ! rsync -avz --delete "$BACKUP_DIR/" "${NAS_USER}@${NAS_HOST}:${NAS_PATH}/" >> "$LOG" 2>&1; then
+    if ! sshpass -p "$NAS_PASSWORD" rsync -avz --delete "$BACKUP_DIR/" "${NAS_USER}@${NAS_HOST}:${NAS_PATH}/" >> "$LOG" 2>&1; then
         log "NAS sync failed"
         send_telegram "❌ NAS sync failed"
         return 1
